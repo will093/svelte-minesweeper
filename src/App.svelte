@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import MineSweeper from './components/MineSweeper.svelte';
 </script>
 

@@ -3,6 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
 import sveltePreprocess from 'svelte-preprocess';
 
@@ -30,7 +31,7 @@ function serve() {
 }
 
 export default {
-	input: 'src/main.js',
+	input: 'src/main.ts',
 	output: {
 		sourcemap: true,
 		format: 'iife',
@@ -48,9 +49,9 @@ export default {
         sourceMap: !production,
         postcss: {
           plugins: [
-             require("tailwindcss"), 
-             require("autoprefixer"),
-             require("postcss-nesting")
+            require("tailwindcss"), 
+            require("autoprefixer"),
+            require("postcss-nesting")
           ],
         },
       }),
@@ -69,6 +70,10 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+		typescript({
+			sourceMap: !production,
+			inlineSources: !production
+		}),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
