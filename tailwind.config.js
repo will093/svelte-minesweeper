@@ -1,5 +1,5 @@
 // tailwind.config.js
-const production = !process.env.ROLLUP_WATCH; // or some other env var like NODE_ENV
+const production = process.env.NODE_ENV === 'production'; // or some other env var like NODE_ENV
 module.exports = {
   future: { // for tailwind 2.0 compat
     purgeLayersByDefault: true, 
