@@ -1,5 +1,6 @@
-<div 
-  class="flex justify-center items-center w-8 h-8 bg-gray-200 text-white text-2xl"
+<div on:click on:contextmenu|preventDefault
+  class="flex justify-center items-center w-12 h-12 text-white text-2xl border border-white"
+  class:bg-gray-grad={state !== CellState.Uncovered}
   style="background-color: {color}">
   {#if state === CellState.Uncovered}
     {#if value}{ value }{/if}
