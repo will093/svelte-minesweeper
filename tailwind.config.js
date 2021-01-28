@@ -5,9 +5,6 @@ module.exports = {
     purgeLayersByDefault: true, 
     removeDeprecatedGapUtilities: true,
   },
-  plugins: [
-    // other plugins here
-  ],
   purge: {
     content: [
       "./src/**/*.svelte",
@@ -15,4 +12,15 @@ module.exports = {
     ], 
     enabled: production // disable purge in dev
   },
+  plugins: [
+    require('tailwindcss-plugins/gradients'),
+  ],
+  variants: {
+    gradients: ['responsive', 'hover'],
+  },
+  theme: {
+    gradients: theme => ({
+      'gray-grad': ['30deg', theme('colors.gray.400'), theme('colors.gray.500')],
+    }),
+},
 };
