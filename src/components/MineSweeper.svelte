@@ -1,24 +1,13 @@
 <main>
-  <GameGrid grid={$gameGrid} on:leftClick={onLeftClick} on:rightClick={onRightClick} />
-  <div>{$remainingFlags}</div>
+  <Header {remainingFlags} timeElapsed={0}/>
+  <GameGrid grid={gameGrid} on:leftClick on:rightClick/>
 </main>
 
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import type { Cell } from '../models/cell';
   import GameGrid from './GameGrid.svelte';
+  import Header from './Header.svelte';
 
-  import { gameGrid, gameSettings, remainingFlags, initialise, toggleFlag, uncover } from '../stores/game';
-
-  onMount(() => {
-    initialise($gameSettings);
-  })
-
-  const onLeftClick = ({ detail: { x, y }}) => {
-    uncover(x, y);
-  }
-
-  const onRightClick = ({ detail: { x, y }}) => {
-    toggleFlag(x, y);
-  }
-  
+  export let gameGrid: Cell[][];
+  export let remainingFlags: number;
 </script>

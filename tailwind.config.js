@@ -19,8 +19,13 @@ module.exports = {
     gradients: ['responsive', 'hover'],
   },
   theme: {
+    extend: {
+      padding: {
+        'full': '100%'
+      },
+    },
     gradients: theme => ({
       'gray-grad': ['30deg', theme('colors.gray.400'), theme('colors.gray.500')],
     }),
-},
+  },
 };

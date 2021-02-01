@@ -1,7 +1,28 @@
-<MineSweeper/>
+<MineSweeper 
+  gameGrid={$gameGrid}
+  remainingFlags={$remainingFlags}
+  on:leftClick={onLeftClick}
+  on:rightClick={onRightClick}
+/>
 
 <script lang="ts">
   import  MineSweeper from './components/MineSweeper.svelte';
+
+  import { onMount } from 'svelte';
+
+  import { gameGrid, gameSettings, remainingFlags, initialise, toggleFlag, uncover } from './stores/game';
+
+  onMount(() => {
+    initialise($gameSettings);
+  })
+
+  const onLeftClick = ({ detail: { x, y }}) => {
+    uncover(x, y);
+  }
+
+  const onRightClick = ({ detail: { x, y }}) => {
+    toggleFlag(x, y);
+  }
 </script>
 
 <style global lang="postcss">

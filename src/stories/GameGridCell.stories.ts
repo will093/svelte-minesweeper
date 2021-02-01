@@ -1,8 +1,21 @@
 import GameGridCell from '../components/GameGridCell.svelte';
+import WidthDecorator from './decorators/WidthDecorator.svelte';
 
 export default {
   title: 'MineSweeper/GameGridCell',
   component: GameGridCell,
+  decorators:  [(storyFn) => {
+    const story = storyFn();
+
+    return {
+      Component: WidthDecorator,
+      props: {
+        child: story.Component,
+        props: story.props,
+        width: '3rem',
+      }
+    }
+  }],
   argTypes: {
     state: {
       control: { type: 'select', options: ['covered', 'flagged', 'uncovered'] },
