@@ -1,14 +1,20 @@
-import { Writable, writable } from 'svelte/store';
+import { derived, Readable, Writable, writable } from 'svelte/store';
 import { CellState } from '../enum/cell-state.enum';
 import type { Cell } from '../models/cell';
+import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
-const gameGrid: Writable<Cell[][]> = writable(undefined);
+const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 1 })
+
+const gameGrid: Writable<Cell[][]> = writable([]);
+const remainingFlags: Readable<number> = derived(
+  [gameSettings, gameGrid], 
+  ([$gameSettings, $gameGrid]) => $gameSettings.totalMines - $gameGrid.flat().filter(cell => cell.state === CellState.Flagged).length)
 
 /**
  * Create the Minesweeper grid.
  */
-const initialise = (width: number, height: number, totalMines: number) => {
+const initialise = ({ width, height, totalMines }: GameSettings) => {
   // Create an empty width x height 2D array. 
   let grid: Cell[][] = Array(width).fill(undefined).map(() => Array(width).fill(undefined));
 
@@ -87,7 +93,9 @@ const adjacentCells = (grid: Cell[][], x: number, y: number): Cell[] =>
   .filter(cell => cell);
 
 export { 
-  gameGrid, 
+  gameGrid,
+  gameSettings,
+  remainingFlags,
   initialise,
   toggleFlag,
   uncover,
