@@ -1,5 +1,5 @@
 <div>
-  {#each gridRows as row, y }
+  {#each grid as row, y }
     <div class="flex">
       {#each row as { state, value }, x}
         <GameGridCell 
@@ -18,7 +18,7 @@
   import GameGridCell from './GameGridCell.svelte';
   import type { Cell } from '../models/cell';
 
-  export let gridRows: Cell[][] = [];
+  export let grid: Cell[][] = [];
 
 	const dispatch = createEventDispatcher();
 </script>
