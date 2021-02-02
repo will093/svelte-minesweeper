@@ -11,10 +11,18 @@ const remainingFlags: Readable<number> = derived(
   [gameSettings, gameGrid], 
   ([$gameSettings, $gameGrid]) => $gameSettings.totalMines - $gameGrid.flat().filter(cell => cell.state === CellState.Flagged).length)
 
+const timeElapsed = writable<number>(0);
+let timeElapsedInterval: number;
 /**
  * Create the Minesweeper grid.
  */
 const initialise = ({ width, height, totalMines }: GameSettings) => {
+  // Reset the timer
+  if (timeElapsedInterval) {
+    clearInterval(timeElapsedInterval);
+    timeElapsedInterval = undefined;
+    timeElapsed.set(0);
+  }
   // Create an empty width x height 2D array. 
   let grid: Cell[][] = Array(width).fill(undefined).map(() => Array(width).fill(undefined));
 
@@ -39,6 +47,9 @@ const initialise = ({ width, height, totalMines }: GameSettings) => {
  * Toggle whether a specific cell is flagged.
  */
 const toggleFlag = (x, y): void => {
+  if (!timeElapsedInterval) {
+    startTimer();
+  }
   gameGrid.update(gr => { 
     const cell = gr[y][x];
     if (cell.state === CellState.Covered) {
@@ -54,6 +65,9 @@ const toggleFlag = (x, y): void => {
  * Uncover a cell - if the cell's value is 0, uncovers the area of 0 valued connected cells and their adjacent cells.
  */
 const uncover = (x: number, y: number): void => {
+  if (!timeElapsedInterval) {
+    startTimer();
+  }
   gameGrid.update(grid => { 
     uncoverCell(grid, x, y);
     return grid;
@@ -92,10 +106,17 @@ const adjacentCells = (grid: Cell[][], x: number, y: number): Cell[] =>
   ]
   .filter(cell => cell);
 
+const startTimer = () => {
+  timeElapsedInterval = setInterval(() => {
+    timeElapsed.update(t => t + 1);
+  }, 1000);
+}
+
 export { 
   gameGrid,
   gameSettings,
   remainingFlags,
+  timeElapsed,
   initialise,
   toggleFlag,
   uncover,

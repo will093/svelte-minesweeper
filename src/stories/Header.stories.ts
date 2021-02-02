@@ -1,8 +1,21 @@
 import Header from '../components/Header.svelte';
+import WidthDecorator from './decorators/WidthDecorator.svelte';
 
 export default {
   title: 'MineSweeper/Header',
   component: Header,
+  decorators:  [(storyFn) => {
+    const story = storyFn();
+
+    return {
+      Component: WidthDecorator,
+      props: {
+        child: story.Component,
+        props: story.props,
+        width: '35rem',
+      }
+    }
+  }],
   argTypes: {
     timeElapsed: {
       control: { type: 'select', options: [0, 10, 100, 6789] },

@@ -1,5 +1,5 @@
 <main>
-  <Header {remainingFlags} timeElapsed={0}/>
+  <Header {remainingFlags} {timeElapsed} on:reset/>
   <GameGrid grid={gameGrid} on:leftClick on:rightClick/>
 </main>
 
@@ -10,4 +10,5 @@
 
   export let gameGrid: Cell[][];
   export let remainingFlags: number;
+  export let timeElapsed: number;
 </script>
