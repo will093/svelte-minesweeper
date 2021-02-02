@@ -4,7 +4,7 @@ import type { Cell } from '../models/cell';
 import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
-const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 1 })
+const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 3 })
 
 const gameGrid: Writable<Cell[][]> = writable([]);
 const remainingFlags: Readable<number> = derived(
@@ -13,6 +13,15 @@ const remainingFlags: Readable<number> = derived(
 
 const timeElapsed = writable<number>(0);
 let timeElapsedInterval: number;
+
+const gameOverLose: Readable<boolean> = derived(gameGrid, 
+  $gameGrid => $gameGrid.flat().some(cell => cell.state === CellState.Exploded)
+);
+
+const gameOverWin: Readable<boolean> = derived(gameGrid,
+  $gameGrid => $gameGrid.flat().filter(cell => cell.value !== 'm').every(cell => cell.state === CellState.Uncovered),
+);
+
 /**
  * Create the Minesweeper grid.
  */
@@ -82,6 +91,9 @@ const uncoverCell = (grid: Cell[][], x: number, y: number): void => {
     adjacentCells(grid, x, y)
       .filter(c => c.state === CellState.Covered)
       .forEach(c => uncoverCell(grid, c.x, c.y));
+  } else if (cell.value === 'm') {
+    grid.flat().filter(cell => cell.value === 'm').forEach(cell => cell.state = CellState.Uncovered);
+    cell.state = CellState.Exploded;
   }
 }
 
@@ -117,6 +129,8 @@ export {
   gameSettings,
   remainingFlags,
   timeElapsed,
+  gameOverWin,
+  gameOverLose,
   initialise,
   toggleFlag,
   uncover,

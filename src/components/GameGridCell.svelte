@@ -5,9 +5,10 @@
   export let state: CellState;
   export let value: CellValue;
 
-  $: color = state === CellState.Uncovered ? cellColors[value] : "#9c9c9c";
+  $: color = state === CellState.Exploded ? cellColors.exploded: cellColors[value];
 
   let cellColors = {
+    exploded: '#ff1f17',
     m: "#000000",
     0: "#e3e3e3",
     1: "#1b68e3",
@@ -25,13 +26,15 @@
   on:click
   on:contextmenu|preventDefault
   class="flex justify-center items-center flex-1 text-white text-2xl border border-white"
-  class:bg-gray-grad={state !== CellState.Uncovered}
+  class:bg-gray-grad={state === CellState.Covered || state === CellState.Flagged}
   style="background-color: {color}"
 >
-  <div> {#if state === CellState.Uncovered}
-    {#if value}{value}{/if}
-  {:else if state === CellState.Flagged}
-    p
-  {/if}</div>
+  <div> 
+    {#if state === CellState.Uncovered || state === CellState.Exploded }
+      {#if value}{value}{/if}
+    {:else if state === CellState.Flagged}
+      p
+    {/if}
+  </div>
   <div class="pt-full"></div>
 </div>
