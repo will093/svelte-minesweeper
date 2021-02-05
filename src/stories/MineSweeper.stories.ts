@@ -1,6 +1,6 @@
 import MineSweeper from '../components/MineSweeper.svelte';
 import { coveredGrid, randomGrid } from './helpers/helpers';
-import WidthDecorator from './decorators/WidthDecorator.svelte';
+import DimensionsDecorator from './decorators/DimensionsDecorator.svelte';
 
 export default {
   title: 'MineSweeper/MineSweeper',
@@ -9,7 +9,7 @@ export default {
     const story = storyFn();
 
     return {
-      Component: WidthDecorator,
+      Component: DimensionsDecorator,
       props: {
         child: story.Component,
         props: story.props,
@@ -36,4 +36,18 @@ export const RandomGame = Template.bind({});
 RandomGame.args = {
   gameGrid: randomGrid(10),
   remainingFlags: 10,
+};
+
+export const GameOverWin = Template.bind({});
+GameOverWin.args = {
+  gameOver: { win: true },
+  gameGrid: randomGrid(10),
+  remainingFlags: 0,
+};
+
+export const GameOverLose = Template.bind({});
+GameOverLose.args = {
+  gameOver: { win: false },
+  gameGrid: randomGrid(10),
+  remainingFlags: 0,
 };

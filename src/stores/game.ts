@@ -1,6 +1,7 @@
 import { derived, Readable, Writable, writable } from 'svelte/store';
 import { CellState } from '../enum/cell-state.enum';
 import type { Cell } from '../models/cell';
+import type { GameOver } from '../models/game-over';
 import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
@@ -14,12 +15,16 @@ const remainingFlags: Readable<number> = derived(
 const timeElapsed = writable<number>(0);
 let timeElapsedInterval: number;
 
-const gameOverLose: Readable<boolean> = derived(gameGrid, 
-  $gameGrid => $gameGrid.flat().some(cell => cell.state === CellState.Exploded)
-);
-
-const gameOverWin: Readable<boolean> = derived(gameGrid,
-  $gameGrid => $gameGrid.flat().filter(cell => cell.value !== 'm').every(cell => cell.state === CellState.Uncovered),
+const gameOver: Readable<GameOver> = derived(gameGrid, 
+  $gameGrid => {
+    const cells = $gameGrid.flat();
+    const lose = cells.some(cell => cell.state === CellState.Exploded);
+    const win = cells.filter(cell => cell.value !== 'm').every(cell => cell.state === CellState.Uncovered);
+    const gameOver = win || lose;
+    return gameOver
+      ? { win }
+      : undefined;
+  }
 );
 
 /**
@@ -30,8 +35,9 @@ const initialise = ({ width, height, totalMines }: GameSettings) => {
   if (timeElapsedInterval) {
     clearInterval(timeElapsedInterval);
     timeElapsedInterval = undefined;
-    timeElapsed.set(0);
   }
+  timeElapsed.set(0);
+  
   // Create an empty width x height 2D array. 
   let grid: Cell[][] = Array(width).fill(undefined).map(() => Array(width).fill(undefined));
 
@@ -124,13 +130,19 @@ const startTimer = () => {
   }, 1000);
 }
 
+gameOver.subscribe($gameOver => {
+  if ($gameOver) {
+    clearInterval(timeElapsedInterval);
+    timeElapsedInterval = undefined;
+  }
+})
+
 export { 
   gameGrid,
   gameSettings,
   remainingFlags,
   timeElapsed,
-  gameOverWin,
-  gameOverLose,
+  gameOver,
   initialise,
   toggleFlag,
   uncover,

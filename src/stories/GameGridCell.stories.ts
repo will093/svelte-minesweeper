@@ -1,5 +1,5 @@
 import GameGridCell from '../components/GameGridCell.svelte';
-import WidthDecorator from './decorators/WidthDecorator.svelte';
+import DimensionsDecorator from './decorators/DimensionsDecorator.svelte';
 
 export default {
   title: 'MineSweeper/GameGridCell',
@@ -8,7 +8,7 @@ export default {
     const story = storyFn();
 
     return {
-      Component: WidthDecorator,
+      Component: DimensionsDecorator,
       props: {
         child: story.Component,
         props: story.props,

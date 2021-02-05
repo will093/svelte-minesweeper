@@ -1,7 +1,7 @@
 import GameGrid from '../components/GameGrid.svelte';
 import { CellState } from '../enum/cell-state.enum';
 import { coveredGrid, randomGrid } from './helpers/helpers';
-import WidthDecorator from './decorators/WidthDecorator.svelte';
+import DimensionsDecorator from './decorators/DimensionsDecorator.svelte';
 
 export default {
   title: 'MineSweeper/GameGrid',
@@ -10,7 +10,7 @@ export default {
     const story = storyFn();
 
     return {
-      Component: WidthDecorator,
+      Component: DimensionsDecorator,
       props: {
         child: story.Component,
         props: story.props,
@@ -27,8 +27,6 @@ const Template = ({ onClick, ...args }) => ({
   Component: GameGrid,
   props: args,
 });
-
-
 
 export const Initial = Template.bind({});
 Initial.args = {

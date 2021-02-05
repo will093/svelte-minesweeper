@@ -2,8 +2,9 @@
   gameGrid={$gameGrid}
   remainingFlags={$remainingFlags}
   timeElapsed={$timeElapsed}
-  on:leftClick={onLeftClick}
-  on:rightClick={onRightClick}
+  gameOver={$gameOver}
+  on:uncover={onUncover}
+  on:toggleFlag={onToggleFlag}
   on:reset={onReset}
 />
 
@@ -12,17 +13,17 @@
 
   import { onMount } from 'svelte';
 
-  import { gameGrid, gameSettings, remainingFlags, timeElapsed, initialise, toggleFlag, uncover } from './stores/game';
+  import { gameGrid, gameSettings, remainingFlags, timeElapsed, initialise, toggleFlag, uncover, gameOver } from './stores/game';
 
   onMount(() => {
     initialise($gameSettings);
   })
 
-  const onLeftClick = ({ detail: { x, y }}) => {
-    uncover(x, y);
+  const onUncover = ({ detail: { x, y }}) => {
+    uncover(x, y); 
   }
 
-  const onRightClick = ({ detail: { x, y }}) => {
+  const onToggleFlag = ({ detail: { x, y }}) => { 
     toggleFlag(x, y);
   }
 
