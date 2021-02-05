@@ -1,4 +1,4 @@
-<main>
+<main class="overflow-auto">
   <Header {remainingFlags} {timeElapsed} on:reset/>
   <div class="relative">
     <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />

@@ -1,4 +1,5 @@
 import GameGridCell from '../components/GameGridCell.svelte';
+import { CellState } from '../enum/cell-state.enum';
 import DimensionsDecorator from './decorators/DimensionsDecorator.svelte';
 
 export default {
@@ -106,5 +107,11 @@ Eight.args = {
 export const Mine = Template.bind({});
 Mine.args = {
   state: 'uncovered',
+  value: 'm',
+};
+
+export const MineExploded = Template.bind({});
+MineExploded.args = {
+  state: CellState.Exploded,
   value: 'm',
 };

@@ -5,7 +5,7 @@ import type { GameOver } from '../models/game-over';
 import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
-const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 3 })
+const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 15 })
 
 const gameGrid: Writable<Cell[][]> = writable([]);
 const remainingFlags: Readable<number> = derived(
@@ -37,7 +37,7 @@ const initialise = ({ width, height, totalMines }: GameSettings) => {
     timeElapsedInterval = undefined;
   }
   timeElapsed.set(0);
-  
+
   // Create an empty width x height 2D array. 
   let grid: Cell[][] = Array(width).fill(undefined).map(() => Array(width).fill(undefined));
 

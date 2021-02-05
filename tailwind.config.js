@@ -23,6 +23,16 @@ module.exports = {
       padding: {
         'full': '100%'
       },
+      maxWidth: {
+        '4': '1rem',
+        '8': '2rem',
+        '12': '3rem',
+      },
+      minWidth: {
+        '4': '1rem',
+        '8': '2rem',
+        '12': '3rem',
+      }
     },
     gradients: theme => ({
       'gray-grad': ['30deg', theme('colors.gray.400'), theme('colors.gray.500')],
