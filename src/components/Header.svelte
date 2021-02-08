@@ -3,8 +3,8 @@
     
   </div>
   <div class="flex-1 flex justify-around">
-    <span class="flex"><span class="text-2xl pr-1"><Flag/></span>{remainingFlags}</span>
-    <span class="flex"><span class="text-2xl pr-1"><Timer/></span>{formattedTimeElapsed}</span>
+    <span class="flex pr-5"><span class="text-2xl text-red-600 pr-1"><Flag/></span>{remainingFlags}</span>
+    <span class="flex"><span class="text-2xl text-yellow-400 pr-1"><Timer/></span>{formattedTimeElapsed}</span>
   </div>
   <div class="flex-1 flex justify-end">
     <button class="text-2xl" on:click={() => dispatch('reset')}><Restart/></button>

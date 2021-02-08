@@ -11,8 +11,8 @@
 
   let cellColors = {
     exploded: "#ff1f17",
-    m: "#e3e3e3",
-    0: "#e3e3e3",
+    m: "#d6d6d6",
+    0: "#d6d6d6",
     1: "#1b68e3",
     2: "#178f04",
     3: "#ff7512",
@@ -43,7 +43,9 @@
         {value}
       {/if}
     {:else if state === CellState.Flagged}
+    <div class="text-red-600">
       <Flag />
+    </div>
     {/if}
   </div>
   <div class="pt-full" />
