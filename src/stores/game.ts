@@ -91,6 +91,11 @@ const uncover = (x: number, y: number): void => {
 
 const uncoverCell = (grid: Cell[][], x: number, y: number): void => {
   const cell = grid[y][x];
+  
+  if (cell.state !== CellState.Covered) {
+    return;
+  }
+
   cell.state = CellState.Uncovered;
 
   if (cell.value === 0) {
