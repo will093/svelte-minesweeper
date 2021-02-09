@@ -43,7 +43,7 @@
     {/if}
   </div>
   {#if state === CellState.Covered || state === CellState.Flagged}
-    <div out:fade={{ duration: 500, easing: quadOut }} class="absolute inset-0 flex justify-center items-center bg-gray-grad">
+    <div out:fade={{ duration: 250, easing: quadOut }} class="absolute inset-0 flex justify-center items-center bg-gray-grad">
       {#if state === CellState.Flagged }
       <div transition:scale={{ duration: 250, easing: backOut }} class="text-red-600">
         <Flag />

@@ -3,7 +3,7 @@
   <div class="relative">
     <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />
     {#if gameOver}
-      <div class="absolute h-full w-full inset-0">
+      <div in:fade={{ duration: 1500, easing: quadIn }} class="absolute h-full w-full inset-0">
         <GameOverModal {gameOver}/>
       </div>
     {/if}
@@ -11,6 +11,9 @@
 </main>
 
 <script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { quadIn } from 'svelte/easing';
+  
   import type { Cell } from '../models/cell';
   import type { GameOver } from '../models/game-over';
   import GameGrid from './GameGrid.svelte';
