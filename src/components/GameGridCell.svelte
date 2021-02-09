@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade, scale } from 'svelte/transition';
+  import { backOut, quadOut } from 'svelte/easing';
   import { CellState } from "../enum/cell-state.enum";
   import type { CellValue } from "../types/cell-value";
   import Flag from "svelte-material-icons/Flag.svelte";
@@ -27,28 +29,28 @@
 <div
   on:click
   on:contextmenu|preventDefault
-  class="flex flex-1 text-white text-2xl border border-white w-10"
-  class:bg-gray-grad={state === CellState.Covered ||
-    state === CellState.Flagged}
-  style="background-color: {color}"
+  class="relative border border-white w-10 text-white text-2xl"
 >
-  <div class="flex justify-center items-center w-full">
-    {#if state === CellState.Uncovered || state === CellState.Exploded}
-      {#if value === "m"}
-        <div
-          class="h-3/5 w-3/5 bg-cover"
-          style="background-image: url('/images/mine.svg')"
-        />
-      {:else if value}
-        {value}
-      {/if}
-    {:else if state === CellState.Flagged}
-    <div class="text-red-600">
-      <Flag />
-    </div>
+  <div class="flex justify-center items-center w-full h-full" style="background-color: {color}">
+    <div class="pt-full" />
+    {#if value === "m"}
+      <div
+        class="h-3/5 w-3/5 bg-cover"
+        style="background-image: url('/images/mine.svg')"
+      />
+    {:else if value}
+      {value}
     {/if}
   </div>
-  <div class="pt-full" />
+  {#if state === CellState.Covered || state === CellState.Flagged}
+    <div out:fade={{ duration: 500, easing: quadOut }} class="absolute inset-0 flex justify-center items-center bg-gray-grad">
+      {#if state === CellState.Flagged }
+      <div transition:scale={{ duration: 250, easing: backOut }} class="text-red-600">
+        <Flag />
+      </div>
+      {/if}
+    </div>
+  {/if}
 </div>
 
 <style>
