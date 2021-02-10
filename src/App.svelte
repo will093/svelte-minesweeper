@@ -34,7 +34,6 @@
   }
 
   const onSetDifficulty = ({ detail }) => {
-    console.log(detail);
     difficulty.set(detail);
     initialise($gameSettings);
   }

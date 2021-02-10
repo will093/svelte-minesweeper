@@ -1,6 +1,6 @@
-<main class="overflow-auto inline-block max-w-full">
+<main class="inline-block max-w-full">
   <Header {remainingFlags} {timeElapsed} {difficulty} on:reset on:setDifficulty/>
-  <div class="relative">
+  <div class="relative overflow-auto">
     <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />
     {#if gameOver}
       <div in:fade={{ duration: 1500, easing: quadIn }} class="absolute h-full w-full inset-0">

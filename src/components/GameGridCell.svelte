@@ -29,7 +29,7 @@
 <div
   on:click
   on:contextmenu|preventDefault
-  class="relative border border-white min-w-8 w-10 text-white text-2xl"
+  class="relative border border-white text-white text-2xl h-full"
 >
   <div class="flex justify-center items-center w-full h-full" style="background-color: {color}">
     <div class="pt-full" />

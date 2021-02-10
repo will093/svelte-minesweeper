@@ -1,12 +1,14 @@
 <div>
-  {#each grid as row, y }
-    <div class="flex">
-      {#each row as { state, value }, x}
-        <GameGridCell 
-          on:click={() => onClick(x, y)} 
-          on:contextmenu={() => onContextMenu(x, y)} 
-          {state}
-          {value}/>
+  {#each grid as row, y (y)}
+    <div class="flex" animate:flip transition:fade>
+      {#each row as { state, value }, x (x)}
+        <div animate:flip transition:fade class="min-w-8 w-10" >
+          <GameGridCell 
+            on:click={() => onClick(x, y)} 
+            on:contextmenu={() => onContextMenu(x, y)} 
+            {state}
+            {value}/>
+        </div>
       {/each}
     </div>
   {/each}
@@ -14,6 +16,8 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte';
+  import { flip } from 'svelte/animate';
+  import { fade } from 'svelte/transition';
 
   import GameGridCell from './GameGridCell.svelte';
   import type { Cell } from '../models/cell';
@@ -48,6 +52,8 @@
       loseAudio.play();
     }
   }
+
+  $: console.log(grid.length)
 
   const onClick = (x: number, y: number) => {
     const { state, value } = grid[y][x];
