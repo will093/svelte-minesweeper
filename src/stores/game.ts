@@ -18,8 +18,8 @@ let timeElapsedInterval: number;
 const gameOver: Readable<GameOver> = derived(gameGrid, 
   $gameGrid => {
     const cells = $gameGrid.flat();
-    const lose = cells.some(cell => cell.state === CellState.Exploded);
-    const win = cells.filter(cell => cell.value !== 'm').every(cell => cell.state === CellState.Uncovered);
+    const lose = cells.length && cells.some(cell => cell.state === CellState.Exploded);
+    const win = cells.length && cells.filter(cell => cell.value !== 'm').every(cell => cell.state === CellState.Uncovered);
     const gameOver = win || lose;
     return gameOver
       ? { win }
