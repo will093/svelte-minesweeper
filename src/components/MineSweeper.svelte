@@ -1,5 +1,5 @@
 <main class="overflow-auto inline-block max-w-full">
-  <Header {remainingFlags} {timeElapsed} on:reset/>
+  <Header {remainingFlags} {timeElapsed} {difficulty} on:reset on:setDifficulty/>
   <div class="relative">
     <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />
     {#if gameOver}
@@ -19,9 +19,11 @@
   import GameGrid from './GameGrid.svelte';
   import Header from './Header.svelte';
   import GameOverModal from './GameOverModal.svelte';
+  import type { GameDifficulty } from '../enum/game-difficulty.enum';
 
   export let gameGrid: Cell[][];
   export let remainingFlags: number;
   export let timeElapsed: number;
   export let gameOver: GameOver;
+  export let difficulty: GameDifficulty;
 </script>

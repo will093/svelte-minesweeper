@@ -3,9 +3,11 @@
   remainingFlags={$remainingFlags}
   timeElapsed={$timeElapsed}
   gameOver={$gameOver}
+  difficulty={$difficulty}
   on:uncover={onUncover}
   on:toggleFlag={onToggleFlag}
   on:reset={onReset}
+  on:setDifficulty={onSetDifficulty}
 />
 
 <script lang="ts">
@@ -13,7 +15,7 @@
 
   import { onMount } from 'svelte';
 
-  import { gameGrid, gameSettings, remainingFlags, timeElapsed, initialise, toggleFlag, uncover, gameOver } from './stores/game';
+  import { gameGrid, gameSettings, remainingFlags, timeElapsed, initialise, toggleFlag, uncover, gameOver, difficulty } from './stores/game';
 
   onMount(() => {
     initialise($gameSettings);
@@ -28,6 +30,12 @@
   }
 
   const onReset = () => {
+    initialise($gameSettings);
+  }
+
+  const onSetDifficulty = ({ detail }) => {
+    console.log(detail);
+    difficulty.set(detail);
     initialise($gameSettings);
   }
 </script>

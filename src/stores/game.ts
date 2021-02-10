@@ -1,11 +1,22 @@
 import { derived, Readable, Writable, writable } from 'svelte/store';
 import { CellState } from '../enum/cell-state.enum';
+import { GameDifficulty } from '../enum/game-difficulty.enum';
 import type { Cell } from '../models/cell';
 import type { GameOver } from '../models/game-over';
 import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
-const gameSettings = writable<GameSettings>({ width: 10, height: 10, totalMines: 15 })
+const difficulty: Writable<GameDifficulty> = writable(GameDifficulty.Medium);
+const gameSettings: Readable<GameSettings> = derived(difficulty, $difficulty => {
+  switch ($difficulty) {
+    case GameDifficulty.Easy:
+      return { width: 8, height: 8, totalMines: 10 };
+    case GameDifficulty.Medium:
+      return { width: 12, height: 12, totalMines: 20 };
+    case GameDifficulty.Hard:
+      return { width: 16, height: 16, totalMines: 25 };
+  }
+})
 
 const gameGrid: Writable<Cell[][]> = writable([]);
 const remainingFlags: Readable<number> = derived(
@@ -148,6 +159,7 @@ export {
   remainingFlags,
   timeElapsed,
   gameOver,
+  difficulty,
   initialise,
   toggleFlag,
   uncover,
