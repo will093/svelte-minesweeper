@@ -6,7 +6,7 @@ import type { GameOver } from '../models/game-over';
 import type { GameSettings } from '../models/game-settings';
 import type { CellValue } from '../types/cell-value';
 
-const difficulty: Writable<GameDifficulty> = writable(GameDifficulty.Medium);
+const difficulty: Writable<GameDifficulty> = writable(GameDifficulty.Easy);
 const gameSettings: Readable<GameSettings> = derived(difficulty, $difficulty => {
   switch ($difficulty) {
     case GameDifficulty.Easy:
