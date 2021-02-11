@@ -4,18 +4,31 @@
   timeElapsed={$timeElapsed}
   gameOver={$gameOver}
   difficulty={$difficulty}
+  muted={$muted}
   on:uncover={onUncover}
   on:toggleFlag={onToggleFlag}
   on:reset={onReset}
   on:setDifficulty={onSetDifficulty}
+  on:toggleAudio={onToggleAudio}
 />
 
 <script lang="ts">
   import  MineSweeper from './components/MineSweeper.svelte';
-
   import { onMount } from 'svelte';
 
-  import { gameGrid, gameSettings, remainingFlags, timeElapsed, initialise, toggleFlag, uncover, gameOver, difficulty } from './stores/game';
+  import { 
+    gameGrid, 
+    gameSettings, 
+    remainingFlags, 
+    timeElapsed, 
+    initialise, 
+    toggleFlag,
+    uncover, 
+    gameOver, 
+    difficulty, 
+    muted,
+    toggleAudio,
+  } from './stores/game';
 
   onMount(() => {
     initialise($gameSettings);
@@ -36,6 +49,10 @@
   const onSetDifficulty = ({ detail }) => {
     difficulty.set(detail);
     initialise($gameSettings);
+  }
+
+  const onToggleAudio = () => {
+    toggleAudio();
   }
 </script>
 

@@ -1,9 +1,9 @@
 <main class="inline-block max-w-full">
   <div style="max-width: {gameGrid.length * 2.5}rem" class="transition-max-width">
-    <Header {remainingFlags} {timeElapsed} {difficulty} on:reset on:setDifficulty/>
+    <Header {remainingFlags} {timeElapsed} {difficulty} {muted} on:reset on:setDifficulty on:toggleAudio/>
   </div>
   <div class="relative overflow-auto">
-    <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />
+    <GameGrid grid={gameGrid} {gameOver} {muted} on:uncover on:toggleFlag />
     {#if gameOver}
       <div in:fade={{ duration: 1500, easing: quadIn }} class="absolute h-full w-full inset-0">
         <GameOverModal {gameOver}/>
@@ -28,4 +28,5 @@
   export let timeElapsed: number;
   export let gameOver: GameOver;
   export let difficulty: GameDifficulty;
+  export let muted: boolean;
 </script>

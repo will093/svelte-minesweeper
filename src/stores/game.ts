@@ -16,7 +16,12 @@ const gameSettings: Readable<GameSettings> = derived(difficulty, $difficulty => 
     case GameDifficulty.Hard:
       return { width: 16, height: 16, totalMines: 25 };
   }
-})
+});
+
+const muted: Writable<boolean> = writable(false);
+const toggleAudio = () => {
+  muted.update(m => !m);
+}
 
 const gameGrid: Writable<Cell[][]> = writable([]);
 const remainingFlags: Readable<number> = derived(
@@ -160,8 +165,10 @@ export {
   timeElapsed,
   gameOver,
   difficulty,
+  muted,
   initialise,
   toggleFlag,
   uncover,
+  toggleAudio,
 };
 

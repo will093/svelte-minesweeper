@@ -26,6 +26,7 @@
 
   export let grid: Cell[][] = [];
   export let gameOver: GameOver;
+  export let muted: boolean;
 
   let uncoverAudio: HTMLAudioElement;
   let flagAudio: HTMLAudioElement;
@@ -33,33 +34,39 @@
   let winAudio: HTMLAudioElement;
 
   onMount(() => {
-    const getAudio = (path) => {
-      const audio = new Audio(path);
-      audio.volume = 0.4;
-      return audio;
-    }
-    uncoverAudio = getAudio('/assets/audio/pop.mp3');
-    flagAudio = getAudio('/assets/audio/flag.mp3');
-    loseAudio = getAudio('/assets/audio/lose.mp3');
-    winAudio = getAudio('/assets/audio/win.mp3');
+    uncoverAudio = createAudio('/assets/audio/pop.mp3');
+    flagAudio = createAudio('/assets/audio/flag.mp3');
+    loseAudio = createAudio('/assets/audio/lose.mp3');
+    winAudio = createAudio('/assets/audio/win.mp3');
   })
 
   $: {
     if (gameOver && gameOver.win) {
-      winAudio.play();
+      playAudio(winAudio);
     }
     if (gameOver && !gameOver.win) {
-      loseAudio.play();
+      playAudio(loseAudio)
     }
   }
 
-  $: console.log(grid.length)
+  const createAudio = (path: string): HTMLAudioElement => {
+    const audio = new Audio(path);
+    audio.volume = 0.4;
+    return audio;
+  }
+
+  const playAudio = (audio: HTMLAudioElement): void => {
+    if (!muted) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }
 
   const onClick = (x: number, y: number) => {
     const { state, value } = grid[y][x];
     if (!gameOver && (state === CellState.Covered)) { 
       if (value !== 'm') {
-        uncoverAudio.play();
+        playAudio(uncoverAudio);
       }
       dispatch('uncover', { x, y }); 
     }
@@ -68,7 +75,7 @@
   const onContextMenu = (x: number, y: number) => {
     const { state } = grid[y][x];
     if (!gameOver && (state === CellState.Covered || state === CellState.Flagged)) { 
-      flagAudio.play();
+      playAudio(flagAudio);
       dispatch('toggleFlag', { x, y }); 
     }
   };

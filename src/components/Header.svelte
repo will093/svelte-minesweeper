@@ -12,11 +12,7 @@
     <span class="flex"><span class="text-2xl text-yellow-400 pr-1"><Timer/></span>{formattedTimeElapsed}</span>
   </div>
   <div class="flex-1 flex justify-end">
-    <!-- {#if muted}
-      <button class="text-2xl mx-2" on:click={() => dispatch('mute')}><VolumeHigh/></button>
-    {:else}
-      <button class="text-2xl mx-2" on:click={() => dispatch('unmute')}><VolumeMute/></button>
-    {/if} -->
+    <button class="text-2xl mx-2" on:click={() => dispatch('toggleAudio')}>{#if muted}<VolumeMute/>{:else}<VolumeHigh/>{/if}</button>
     <button class="text-2xl" on:click={() => dispatch('reset')}><Restart/></button>
   </div>
 </header>
@@ -24,8 +20,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import Restart from "svelte-material-icons/Restart.svelte";
-  // import VolumeMute from "svelte-material-icons/VolumeMute.svelte";
-  // import VolumeHigh from "svelte-material-icons/VolumeHigh.svelte";
+  import VolumeMute from "svelte-material-icons/VolumeMute.svelte";
+  import VolumeHigh from "svelte-material-icons/VolumeHigh.svelte";
 
   import Flag from "svelte-material-icons/Flag.svelte";
   import Timer from "svelte-material-icons/Timer.svelte";
