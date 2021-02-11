@@ -1,5 +1,7 @@
 <main class="inline-block max-w-full">
-  <Header {remainingFlags} {timeElapsed} {difficulty} on:reset on:setDifficulty/>
+  <div style="max-width: {gameGrid.length * 2.5}rem" class="transition-max-width">
+    <Header {remainingFlags} {timeElapsed} {difficulty} on:reset on:setDifficulty/>
+  </div>
   <div class="relative overflow-auto">
     <GameGrid grid={gameGrid} {gameOver} on:uncover on:toggleFlag />
     {#if gameOver}

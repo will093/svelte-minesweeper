@@ -1,8 +1,8 @@
 <div>
   {#each grid as row, y (y)}
-    <div class="flex" animate:flip transition:fade>
+    <div class="flex">
       {#each row as { state, value }, x (x)}
-        <div animate:flip transition:fade class="min-w-8 w-10" >
+        <div class="min-w-8 w-10" animate:flip transition:fade>
           <GameGridCell 
             on:click={() => onClick(x, y)} 
             on:contextmenu={() => onContextMenu(x, y)} 

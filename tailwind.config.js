@@ -32,7 +32,10 @@ module.exports = {
         '4': '1rem',
         '8': '2rem',
         '12': '3rem',
-      }
+      },
+      transitionProperty: {
+        'max-width': 'max-width'
+      },
     },
     gradients: theme => ({
       'gray-grad': ['30deg', theme('colors.gray.400'), theme('colors.gray.500')],
